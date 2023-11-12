@@ -1,17 +1,24 @@
 const http = require('http');
 const fs = require('fs');
 const { hostname } = require('os');
-
-const port = 8000;
+const url = require('url');
 
 const indexHtml = fs.readFileSync('index.html');
+const aboutHtml = fs.readFileSync('about.html');
+const contactHtml = fs.readFileSync('contact-me.html');
 
 const server = http.createServer((req, res) => {
-  res.statusCode = 200;
   res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.end(indexHtml);
+  const reqUrl = url.parse(req.url).pathname;
+  if (reqUrl == '/about') {
+    res.end(aboutHtml);
+  } else if (reqUrl == '/' || reqUrl == 'index') {
+    res.end(indexHtml);
+  } else if (reqUrl == '/contact-me') {
+    res.end(contactHtml);
+  }
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+server.listen(8080, hostname, () => {
+  console.log(`Server running at http://${hostname}:8080/`);
 });
