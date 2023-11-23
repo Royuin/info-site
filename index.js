@@ -6,6 +6,7 @@ const url = require('url');
 const indexHtml = fs.readFileSync('index.html');
 const aboutHtml = fs.readFileSync('about.html');
 const contactHtml = fs.readFileSync('contact-me.html');
+const html404 = fs.readFileSync('404.html');
 
 const server = http.createServer((req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -16,6 +17,8 @@ const server = http.createServer((req, res) => {
     res.end(indexHtml);
   } else if (reqUrl == '/contact-me') {
     res.end(contactHtml);
+  } else {
+    res.end(html404);
   }
 });
 
